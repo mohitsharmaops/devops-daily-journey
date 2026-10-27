@@ -44,3 +44,40 @@ whoami                                  # Show who you are logged in as
 man cat                                 # Open manual for any command
 clear                                   # Clear terminal screen
 history                                 # Show all commands you typed before
+
+
+# Commands - Day 02
+
+# Git
+git --version                                # Check Git version
+git clone <url>                              # Clone repo from 【entity-GitHub¦canonical_name=GitHub】
+cd devops-daily-journey                      # Enter repo folder
+git remote -v                                # Show remote origin
+
+# Navigation
+pwd                                          # Current directory path
+ls -la                                       # List all including hidden files
+ls -alps                                     # List all with size and permissions
+cd ..                                        # Go back one level
+
+# Reading Files
+cat readme                                   # Read file content
+cat ./-file                                  # Read file starting with dash
+cat -- -file                                 # -- ends options, then filename
+cat "my file.log"                            # Quotes handle spaces
+cat "./--spaces in this filename--"         # Handles dash + spaces
+cat "./...Hiding-From-You"                   # Read hidden dotfile
+ls -a                                        # Show hidden files
+
+# Finding File Types
+find . -type f                               # Find all files recursively
+find . -type f | xargs file                  # Show what type each file is
+find . -type f -print0 | xargs -0 file       # Safe version for filenames with spaces
+
+# SSH & System
+ssh user@host -p 2220                        # Connect to remote server
+exit                                         # Leave remote/server
+whoami                                       # Current logged in user
+clear                                        # Clear screen
+history                                      # Previous commands
+cat --help                                   # Help when man doesn't work
