@@ -53,6 +53,7 @@ git --version                                # Check Git version
 git clone <url>                              # Clone repo from 【entity-GitHub¦canonical_name=GitHub】
 cd devops-daily-journey                      # Enter repo folder
 git remote -v                                # Show remote origin
+git pull                                     # Fetch and merge changes from Github to local machine
 
 # Navigation
 pwd                                          # Current directory path
