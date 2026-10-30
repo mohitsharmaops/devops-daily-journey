@@ -81,3 +81,16 @@ whoami                                       # Current logged in user
 clear                                        # Clear screen
 history                                      # Previous commands
 cat --help                                   # Help when man doesn't work
+
+
+
+# Commands - Day 03
+
+mkdir                                        # Make new directory(folder)
+rmdir                                        # Remove directory (only deletes empty directories)
+rm                                           # remove files or directories
+rm -rf                                       # deletes directories with sub directories (must use with care)
+mv                                           # move and rename files
+cp                                           # copy files
+head                                         # Displays top 10 lines in a file
+head -n 20 app.log                           # this will display top 20 lines of app.log file
