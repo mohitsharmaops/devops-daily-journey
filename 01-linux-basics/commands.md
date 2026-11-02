@@ -98,3 +98,60 @@ mv                                           # move and rename files
 cp                                           # copy files
 head                                         # Displays top 10 lines in a file
 head -n 20 app.log                           # this will display top 20 lines of app.log file
+
+
+Day 04 : Check 02-Shell-scripting
+
+
+# Commands - Day 04
+
+Linux Permissions (rwx & chmod)
+
+Today I learned how Linux permissions actually work — from your screenshot.
+
+## The Basics from Image
+
+R - Read - 4
+W - Write - 2
+X - Execute - 1
+
+## How it adds up
+
+User | Group | Others
+-----|-------|-------
+rw-  | r--   | r-- 
+6    | 4     | 4     = 644 (File)
+
+d rwx | r-x | r-x
+  7   | 5   | 5     = 755 (Directory)
+  ^
+  d = Directory
+
+### Math:
+- r = 4, w = 2, x = 1
+- rw- = 4+2+0 = 6
+- r-- = 4+0+0 = 4
+- rwx = 4+2+1 = 7
+- r-x = 4+0+1 = 5
+
+## File vs Directory
+
+644 file:
+- User: rw- (6) = can read and write
+- Group: r-- (4) = can only read
+- Others: r-- (4) = can only read
+
+755 directory:
+- d = it's a directory, not a file
+- User: rwx (7) = read, write, execute (enter the folder)
+- Group: r-x (5) = read and execute
+- Others: r-x (5) = read and execute
+
+## Commands I practiced today
+
+ls -l                          # See permissions: -rw-r--r-- or drwxr-xr-x
+chmod 644 file.txt             # Set file to rw-r--r--
+chmod 755 script.sh            # Set script/folder to rwxr-xr-x (needed to execute)
+chmod +x script.sh             # Add execute permission
+chmod -x script.sh             # Remove execute
+chown user:group file          # Change owner
