@@ -89,6 +89,8 @@ cat --help                                   # Help when man doesn't work
 
 mkdir                                        # Make new directory(folder)
 mkdir -p test/test-{1,2,3}                   # Make sub directories, This will make subfolder within test directory
+-p in mkdir				     # It means parent directory, it will create parent directory and if it already exist, it will run the rest of the command and give no error.
+
 rmdir                                        # Remove directory (only deletes empty directories)
 rm                                           # remove files or directories
 rm -rf                                       # deletes directories with sub directories (must use with care)
