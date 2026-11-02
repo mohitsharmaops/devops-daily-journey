@@ -1,0 +1,42 @@
+# TIL — Day 04: Shell Scripting Basics
+
+
+## 1. Why Scripting in DevOps?
+- Automation — avoid repeating same manual task
+- Saves time, reduces human error, repeatable
+
+## 2. touch vs vim
+- touch file       # Creates empty file only
+- vim file         # Creates + opens editor to write
+- mkdir file       # Creates folder — not a file
+
+## 3. Shebang #!/bin/bash
+- First line of every shell script
+- #!/bin/bash = use bash to run
+- #!/bin/sh = use sh
+- #!/bin/ksh = use ksh
+- Without it, script may run with wrong shell or fail
+
+## 4. Difference Between Shells
+- bash = Bourne Again Shell, most common, what Git Bash uses
+- dash = lighter and faster, used for system boot
+- ksh = Korn Shell, older version, bash is improved
+- Check yours: echo $SHELL
+
+## 5. How to Run a Shell Script
+- echo "Hello"             # Print to screen
+- chmod +x script.sh       # Give execute permission
+- ./script.sh              # Run it
+- Without chmod +x = Permission denied
+
+## 6. CPU and RAM Check
+- top                      # Live CPU and RAM usage
+- lscpu			   # CPU information
+- nproc 		   # Number of CPUs
+- top                      # Live CPU, RAM, processes — press q to exit
+- top then press M         # Sort by memory
+- top then press P         # Sort by CPU
+- htop                     # Better version of top (needs install)
+**sudo apt install htop**  # if htop is not found you can install it with this command
+- free -m                  # RAM in MB
+- free -h                  # RAM in human readable
