@@ -88,6 +88,7 @@ cat --help                                   # Help when man doesn't work
 # Commands - Day 03
 
 mkdir                                        # Make new directory(folder)
+mkdir -p test/test-{1,2,3}                   # Make sub directories, This will make subfolder within test directory
 rmdir                                        # Remove directory (only deletes empty directories)
 rm                                           # remove files or directories
 rm -rf                                       # deletes directories with sub directories (must use with care)
