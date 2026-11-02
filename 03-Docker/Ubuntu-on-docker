@@ -1,0 +1,63 @@
+# TIL — Day 06: How to Run Ubuntu on Docker for Linux Practice
+
+## Commands to Run Ubuntu
+
+### 1. Quick Test (deletes after exit)
+
+docker run -it --rm ubuntu bash
+
+# -i = interactive (keep input open)
+# -t = allocate terminal
+# --rm = delete container after exit
+# ubuntu = image name
+# bash = command to run inside
+
+Result:
+root@346d0edf0891:/#
+# You are now root inside real Ubuntu
+
+### 2. Keep It (so you can come back to same container)
+
+docker run -it --name my-ubuntu-lab ubuntu bash
+
+# --name my-ubuntu-lab = give it a name to find later
+# No --rm, so it stays after exit
+
+Inside:
+apt update
+apt install -y sudo adduser passwd
+adduser mohit
+usermod -aG sudo mohit
+id mohit
+su - mohit
+
+exit
+# Back to Windows: Vanilla Test@MW-C81R444 UCRT64 ~
+
+### 3. How to Get Back In After Exit
+
+docker ps -a
+# Shows: my-ubuntu-lab   Exited
+
+docker start -ai my-ubuntu-lab
+# start = start stopped container
+# -a = attach, -i = interactive
+
+You are back inside same container with all files.
+
+### 4. Other Docker Commands
+
+docker ps
+# Show running containers only
+
+docker ps -a
+# Show all, including stopped
+
+docker stop my-ubuntu-lab
+# Stop container
+
+docker rm my-ubuntu-lab
+# Delete container permanently
+
+docker run -it --rm ubuntu bash
+# Fresh clean Ubuntu every time
