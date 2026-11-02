@@ -155,3 +155,86 @@ chmod 755 script.sh            # Set script/folder to rwxr-xr-x (needed to execu
 chmod +x script.sh             # Add execute permission
 chmod -x script.sh             # Remove execute
 chown user:group file          # Change owner
+
+
+# TIL — Day 06: User Creation, Permissions & SUDO
+
+## What I Learned Today
+
+### 1. adduser vs useradd — The Mistake I Made
+
+❌ add user mohit          # Wrong — space breaks it, "add: command not found"
+❌ useradd mohit           # Creates user but NO password, sudo fails later
+✅ adduser mohit           # Correct — one word, asks for password automatically
+
+### 2. Real Creation (from my lab)
+
+root@1b57:~# adduser mohit
+New password:
+Retype new password:
+passwd: password updated successfully
+Changing the user information for mohit
+Full Name []: Mohit Sharma
+Room Number []: 1
+
+This creates:
+- User: mohit
+- Group: mohit (gid 1001)
+- Home: /home/mohit/
+- Password: set during creation
+
+### 3. Check User
+
+id mohit
+# uid=1001(mohit) gid=1001(mohit) groups=1001(mohit)
+
+cat /etc/passwd | grep mohit
+ls /home/
+
+### 4. Give SUDO Power
+
+usermod -aG sudo mohit
+# -aG = add to Group
+# sudo group members can use sudo
+
+id suravi
+# Should show: groups=...27(sudo)
+
+# Switch and test
+su - mohit
+sudo whoami
+# Asks for password, returns root
+
+### 5. Permissions Link (from Day 02)
+
+From yesterday's screenshot:
+R=4, W=2, X=1
+File 644 = rw-r--r--
+Dir  755 = rwxr-xr-x
+
+chmod 644 file
+chmod 755 script.sh
+chmod +x script.sh
+chown mohit:devops file
+
+### 6. umask (default filter)
+
+umask 022 = files 644, dirs 755
+umask 077 = files 600, dirs 700 (most private)
+
+### 7. Password Reset (when sudo fails)
+
+If you see:
+unix_chkpwd: password check failed for user (mohit)
+sudo: Authentication failed
+
+Fix as root:
+passwd mohit
+# Set new password
+
+### 8. My Lab Setup
+
+I practiced in Docker Ubuntu:
+docker run -it --name my-ubuntu-lab ubuntu bash
+apt update && apt install -y sudo adduser passwd
+
