@@ -1,0 +1,69 @@
+Build a Full Ubuntu Lab
+Step 1: Create Project Folder
+PowerShell:
+
+mkdir -p ~/ubuntu-lab
+cd ~/ubuntu-lab
+UCRT64 / Git Bash:
+
+mkdir -p ~/ubuntu-lab
+cd ~/ubuntu-lab
+Step 2: Create Dockerfile (No .txt!)
+Run notepad Dockerfile and paste:
+FROM ubuntu:22.04
+ENV DEBIAN_FRONTEND=noninteractive
+# Full Linux Admin toolkit - RHCSA / 31 LPA Roadmap ready
+RUN apt-get update && apt-get install -y \
+    iproute2 net-tools iputils-ping dnsutils netcat-openbsd traceroute curl wget \
+    procps htop systemd systemd-sysv psmisc lsof \
+    vim nano sudo less man-db tree file rsync zip unzip \
+    fdisk gdisk parted lvm2 \
+    git openssh-client bash-completion \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+CMD ["/bin/bash"]
+
+#### Windows Notepad adds .txt. Save as Dockerfile, not Dockerfile.txt. Use ren Dockerfile.txt Dockerfile to fix.
+
+Step 3: Create docker-compose.yml
+Run notepad docker-compose.yml and paste:
+
+version: '3.8'
+services:
+  my-ubuntu-lab:
+    build: .
+    image: full-ubuntu-lab:22.04
+    container_name: my-ubuntu-lab
+    hostname: ubuntu-lab
+    privileged: true
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      - ubuntu_lab_home:/root
+    tty: true
+    stdin_open: true
+    command: /bin/bash
+volumes:
+  ubuntu_lab_home:
+
+Step 4: Build
+docker compose up -d --build
+You should see:
+
+Image full-ubuntu-lab:22.04 Built
+Network ubuntu-lab_default Created
+Volume ubuntu_lab_home Created
+Container my-ubuntu-lab Started
+
+Step 5: Enter and Test
+docker exec -it my-ubuntu-lab bash
+
+Step 6: Daily Workflow
+# Morning - Start
+cd ~/ubuntu-lab
+docker start my-ubuntu-lab
+docker exec -it my-ubuntu-lab bash
+# ... do Linux practice ...
+# Exit & Stop
+# Inside container:
+exit
+# Back in PowerShell:
+docker stop my-ubuntu-lab
