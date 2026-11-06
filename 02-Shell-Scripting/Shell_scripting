@@ -40,3 +40,29 @@
 **sudo apt install htop**  # if htop is not found you can install it with this command
 - free -m                  # RAM in MB
 - free -h                  # RAM in human readable
+
+
+
+# Day 09: curl & wget
+
+## curl - Terminal Browser
+curl = Client URL. Used to test APIs and check if site is alive.
+
+```bash
+curl https://example.com          # GET page
+curl -I https://example.com       # headers only, health check
+curl -s https://example.com       # silent, no progress bar
+curl -L https://google.com        # follow redirect (301 -> 200)
+curl -o file.html https://example.com  # save to fill
+
+wget https://example.com              # downloads index.html
+wget -O my-page.html https://example.com
+wget -c file.zip                      # continue broken download
+wget -r https://example.com/docs/      # download whole site
+
+
+Status Codes I Learned
+200 = OK
+301 = Moved, check location: header
+404 = Not Found
+500 = Server Error
