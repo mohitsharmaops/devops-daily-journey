@@ -41,6 +41,7 @@
 - free -m                  # RAM in MB
 - free -h                  # RAM in human readable
 
+<<<<<<< HEAD
 
 
 # Day 09: curl & wget
@@ -66,3 +67,106 @@ Status Codes I Learned
 301 = Moved, check location: header
 404 = Not Found
 500 = Server Error
+=======
+# See all users
+cat /etc/passwd
+cut -d: -f1 /etc/passwd
+ls /home
+
+# Create user
+useradd -m -s /bin/bash mohit
+passwd mohit
+usermod -aG sudo mohit
+id mohit
+
+# Switch user
+su - mohit
+whoami
+pwd
+exit
+
+# Permissions
+ls -l
+chmod +x node.sh    # give execute
+chmod -x node.sh    # remove execute
+chown mohit:mohit node.sh
+./node.sh
+
+# Delete user
+userdel mohit       # deletes user only, files stay
+userdel -r mohit    # deletes user + /home/mohit
+
+# Find ghost files
+find / -uid 1000 -ls
+
+
+
+What I Did
+# 1. Created user and file
+useradd -m -s /bin/bash mohit
+passwd mohit
+chown mohit:mohit node.sh
+chmod +x node.sh
+./node.sh
+# This is a test
+# 2. Deleted user (without -r)
+userdel mohit
+# 3. Recreated same user
+useradd -m -s /bin/bash mohit
+# 4. Checked file
+ls -l /home/node.sh
+# -rwxr-xr-x 1 mohit mohit 69 Nov 11 04:55 node.sh
+The file still showed mohit mohit with same permissions. I thought deleting the user would delete permissions. It didn't.
+
+What I Learned
+1. Linux Stores UID, Not Name
+ls -l shows you a name, but the file system stores a number.
+
+File node.sh does NOT store:
+
+owner = mohit
+It stores:
+
+owner UID = 1000
+group GID = 1000
+permissions = -rwxr-xr-x (755)
+/etc/passwd is just a phonebook that translates:
+
+1000 -> mohit
+Delete the user = delete the phonebook entry. The file still has 1000 written on it.
+
+2. Proof: The Ghost UID
+If you check between delete and recreate:
+
+userdel mohit
+ls -l /home/node.sh
+# -rwxr-xr-x 1 1000 1000 node.sh
+No name, just 1000. Because no user with UID 1000 exists anymore.
+
+Recreate user:
+
+useradd -m -s /bin/bash mohit
+# Linux gives first free UID = 1000 again
+ls -l /home/node.sh
+# -rwxr-xr-x 1 mohit mohit node.sh
+It looks like permissions survived. They never went away.
+
+3. userdel vs userdel -r
+Command	What it does
+userdel mohit	Deletes user from /etc/passwd only. Files in /home/mohit and elsewhere stay.
+userdel -r mohit	Deletes user + deletes /home/mohit + mail spool. Other files elsewhere still stay.
+Even -r does NOT delete files the user created outside his home, like /home/node.sh or /tmp/script.sh.
+
+4. Why This Matters in Real Jobs
+When an employee leaves a company:
+
+Admin runs userdel old_employee
+His files become owned by ghost UID 1001
+New employee with same UID 1001 would suddenly own all old files!
+Fix in production:
+
+# Find all files owned by ghost UID
+find / -uid 1000 -ls
+# Give them to new owner
+chown -R new_user:new_user /home/old_user
+>>>>>>> 80fd50a (Added commands I learned today and also learnt that deteleting a user does not delete his file or permissions)
